@@ -1,28 +1,27 @@
-@Library('maven-shared-library') _ // Load your shared library
+@Library('maven-shared-library') _
 
 pipeline {
     agent any
 
     tools {
-        maven 'Maven 3.6.3'  // Replace with the name of your Maven installation in Jenkins
+        maven 'Maven 3.6.3'  
     }
 
     environment {
         MAVEN_HOME = tool name: 'Maven 3.6.3', type: 'Maven'
-        JAVA_HOME = tool name: 'JDK 11', type: 'JDK'  // Set the correct JDK version
+        JAVA_HOME = tool name: 'JDK 11', type: 'JDK'  
     }
 
     stages {
         stage('Checkout') {
             steps {
-                checkout scm  // Checkout the code from your repository
+                checkout scm  
             }
         }
 
         stage('Build') {
             steps {
                 script {
-                    // Call the shared library function to build the Maven project
                     mavenBuild()
                 }
             }
@@ -31,7 +30,6 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    // You can add additional testing steps here, e.g., running unit tests
                     echo 'Running tests...'
                     sh 'mvn test'
                 }
@@ -41,7 +39,6 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    // Deploy to your environment (if needed)
                     echo 'Deploying project...'
                     sh 'mvn deploy'
                 }
